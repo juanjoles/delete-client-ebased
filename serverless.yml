@@ -1,0 +1,23 @@
+
+service: juanjolescano-deleteclient-integrador
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  region: us-east-1
+  runtime: nodejs12.x
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:UpdateItem
+      Resource: arn:aws:dynamodb:us-east-1:450865910417:table/juanjoselescano-clients
+       
+functions:
+  deleteClient:
+      handler: deleteClient.handler
+      description: 'An API that delete client'
+      events:
+        - http:
+            path: clients/{id}
+            method: DELETE
